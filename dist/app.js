@@ -23,6 +23,21 @@
   let index = 0;
   let maxVisited = 0;
   let toastTimer;
+  let enterTimer;
+
+  const brandLogo = document.querySelector(".brand-logo");
+  const brandUpload = document.querySelector(".brand-upload");
+  const brandFallback = document.querySelector(".brand-fallback");
+
+  function revealOptionalAssets() {
+    if (brandLogo.naturalWidth > 0) {
+      brandUpload.hidden = false;
+      brandFallback.hidden = true;
+    }
+  }
+
+  brandLogo.addEventListener("load", revealOptionalAssets);
+  revealOptionalAssets();
 
   function announce(message) {
     clearTimeout(toastTimer);
@@ -36,8 +51,21 @@
     maxVisited = Math.max(maxVisited, index);
     pages.forEach((page, i) => {
       page.classList.toggle("is-active", i === index);
+      page.classList.remove("is-entering");
       page.setAttribute("aria-hidden", i === index ? "false" : "true");
     });
+    clearTimeout(enterTimer);
+    const activePage = pages[index];
+    if (
+      !document.hidden &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      activePage.classList.add("is-entering");
+      enterTimer = setTimeout(
+        () => activePage.classList.remove("is-entering"),
+        750,
+      );
+    }
     tabs.forEach((tab, i) => {
       tab.classList.toggle("active", i === index);
       tab.classList.toggle("done", i < index);
@@ -51,7 +79,7 @@
     progress.style.width = `${(index / (pages.length - 1)) * 100}%`;
     document.title = `${pages[index].querySelector("h1,h2").textContent} · Hive Keychain`;
     if (updateHash) history.replaceState(null, "", `#${hashes[index]}`);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "instant" });
     tutorial.focus({ preventScroll: true });
   }
 
@@ -70,7 +98,7 @@
     if (event.key === "ArrowLeft" && index > 0) render(index - 1);
   });
 
-  if (localStorage.getItem("hive-tutorial-theme") === "light")
+  if (localStorage.getItem("hive-tutorial-theme") !== "dark")
     document.documentElement.classList.add("light");
   function syncThemeLabel() {
     themeToggle.setAttribute(
@@ -107,6 +135,7 @@
 
   function setKeychainMode(available) {
     keychainAvailable = available;
+    loginButton.classList.remove("is-success");
     loginButton.disabled = false;
     loginButton.querySelector("span").textContent = "Login with Keychain";
     if (available) {
@@ -176,6 +205,7 @@
       `Nonce: ${nonce}`,
     ].join("\n");
 
+    loginButton.classList.remove("is-success");
     loginButton.disabled = true;
     loginButton.querySelector("span").textContent = "Waiting for Keychain…";
     loginProgress.textContent =
@@ -189,6 +219,7 @@
           if (response && response.success) {
             const username =
               (response.data && response.data.username) || response.username;
+            loginButton.classList.add("is-success");
             loginButton.querySelector("span").textContent = "Logged in";
             loginProgress.textContent = `${username ? `Authenticated as @${username}. ` : "Authentication approved. "}Your private key stayed in Keychain.`;
             announce("Real Keychain login approved.");
@@ -233,6 +264,7 @@
   });
   document.querySelector("#login-approve").addEventListener("click", () => {
     closeApproval();
+    loginButton.classList.add("is-success");
     loginButton.querySelector("span").textContent = "Logged in";
     loginButton.disabled = true;
     loginProgress.textContent =
