@@ -1,149 +1,476 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#121319" />
   <meta name="description" content="Learn the essentials of Hive and Hive Keychain in nine interactive steps." />
   <title>Hive Keychain · Onboarding</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23f62e52'/%3E%3Cpath d='M38 18a9 9 0 0 0-8.6 11.7L17 42v7h7v-5h5v-5h5l3.1-3.1A9 9 0 1 0 38 18Zm0 6a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z' fill='white'/%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23f62e52'/%3E%3Cpath d='M38 18a9 9 0 0 0-8.6 11.7L17 42v7h7v-5h5v-5h5l3.1-3.1A9 9 0 1 0 38 18Zm0 6a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z' fill='white'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
+
 <body>
   <svg class="icon-sprite" aria-hidden="true">
-    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="15.5" cy="8.5" r="4.5"/><path d="m12.3 11.7-7.8 7.8M7 17l2 2m1-5 2 2"/></symbol>
-    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></symbol>
-    <symbol id="i-network" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4m-6 4v-4h12v4"/></symbol>
-    <symbol id="i-window" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 9h18M7 3v4m10-4v4"/></symbol>
-    <symbol id="i-feather" viewBox="0 0 24 24"><path d="M20.5 3.5c-5.3.2-10.3 3-13 7.4C5.9 13.4 5 16 4.5 19.5c3.5-.5 6.1-1.4 8.6-3 4.4-2.7 7.2-7.7 7.4-13Z"/><path d="m4 20 9-9"/></symbol>
-    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 6.5h14a2 2 0 0 1 2 2V19H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12"/><path d="M15 11h6v5h-6a2.5 2.5 0 0 1 0-5Z"/></symbol>
-    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.7 2.7 8.2 7 10 4.3-1.8 7-5.3 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></symbol>
-    <symbol id="i-crown" viewBox="0 0 24 24"><path d="m3 7 4 4 5-7 5 7 4-4-2 11H5L3 7Z"/><path d="M5 21h14"/></symbol>
-    <symbol id="i-coins" viewBox="0 0 24 24"><ellipse cx="8" cy="8" rx="5" ry="3"/><path d="M3 8v4c0 1.7 2.2 3 5 3 1 0 1.9-.2 2.7-.5M13 8v2"/><ellipse cx="16" cy="15" rx="5" ry="3"/><path d="M11 15v4c0 1.7 2.2 3 5 3s5-1.3 5-3v-4"/></symbol>
-    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="m13 2-9 12h8l-1 8 9-12h-8l1-8Z"/></symbol>
-    <symbol id="i-dollar" viewBox="0 0 24 24"><path d="M12 2v20m5-16H9a4 4 0 0 0 0 8h6a4 4 0 0 1 0 8H7"/></symbol>
-    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18h1.5a2 2 0 0 0 0-4H12a2 2 0 0 1 0-4h4a5 5 0 0 0 5-5c0-2.8-4-5-9-5Z"/><circle cx="7.5" cy="10" r=".7"/><circle cx="10" cy="6.7" r=".7"/><circle cx="15" cy="7" r=".7"/></symbol>
-    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9m-2-12a4 4 0 0 1 0 7.8"/></symbol>
-    <symbol id="i-gamepad" viewBox="0 0 24 24"><path d="M8.5 6h7a6 6 0 0 1 5.8 7.6l-1.1 4a2.7 2.7 0 0 1-4.7 1l-1.7-2H10l-1.7 2a2.7 2.7 0 0 1-4.7-1l-1-4A6 6 0 0 1 8.5 6Z"/><path d="M7 10v4m-2-2h4m7-1h.01m2 2h.01"/></symbol>
-    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/></symbol>
-    <symbol id="i-login" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5m5 5H3m12-9h5a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-5"/></symbol>
-    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/></symbol>
-    <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5m4-1v5l3 2"/></symbol>
-    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
-    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.6 2.6 0 1 1 4.6 1.7c-1 .9-2.3 1.2-2.3 3.3m0 3h.01"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24">
+      <circle cx="15.5" cy="8.5" r="4.5" />
+      <path d="m12.3 11.7-7.8 7.8M7 17l2 2m1-5 2 2" />
+    </symbol>
+    <symbol id="i-user" viewBox="0 0 24 24">
+      <circle cx="12" cy="7" r="4" />
+      <path d="M5 21v-2a7 7 0 0 1 14 0v2" />
+    </symbol>
+    <symbol id="i-network" viewBox="0 0 24 24">
+      <rect x="9" y="3" width="6" height="5" rx="1" />
+      <rect x="3" y="16" width="6" height="5" rx="1" />
+      <rect x="15" y="16" width="6" height="5" rx="1" />
+      <path d="M12 8v4m-6 4v-4h12v4" />
+    </symbol>
+    <symbol id="i-window" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="15" rx="2" />
+      <path d="M3 9h18M7 3v4m10-4v4" />
+    </symbol>
+    <symbol id="i-feather" viewBox="0 0 24 24">
+      <path d="M20.5 3.5c-5.3.2-10.3 3-13 7.4C5.9 13.4 5 16 4.5 19.5c3.5-.5 6.1-1.4 8.6-3 4.4-2.7 7.2-7.7 7.4-13Z" />
+      <path d="m4 20 9-9" />
+    </symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24">
+      <path d="M4 6.5h14a2 2 0 0 1 2 2V19H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12" />
+      <path d="M15 11h6v5h-6a2.5 2.5 0 0 1 0-5Z" />
+    </symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24">
+      <path d="M12 3 5 6v5c0 4.7 2.7 8.2 7 10 4.3-1.8 7-5.3 7-10V6l-7-3Z" />
+      <path d="m9 12 2 2 4-4" />
+    </symbol>
+    <symbol id="i-crown" viewBox="0 0 24 24">
+      <path d="m3 7 4 4 5-7 5 7 4-4-2 11H5L3 7Z" />
+      <path d="M5 21h14" />
+    </symbol>
+    <symbol id="i-coins" viewBox="0 0 24 24">
+      <ellipse cx="8" cy="8" rx="5" ry="3" />
+      <path d="M3 8v4c0 1.7 2.2 3 5 3 1 0 1.9-.2 2.7-.5M13 8v2" />
+      <ellipse cx="16" cy="15" rx="5" ry="3" />
+      <path d="M11 15v4c0 1.7 2.2 3 5 3s5-1.3 5-3v-4" />
+    </symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24">
+      <path d="m13 2-9 12h8l-1 8 9-12h-8l1-8Z" />
+    </symbol>
+    <symbol id="i-dollar" viewBox="0 0 24 24">
+      <path d="M12 2v20m5-16H9a4 4 0 0 0 0 8h6a4 4 0 0 1 0 8H7" />
+    </symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24">
+      <path d="M12 3a9 9 0 1 0 0 18h1.5a2 2 0 0 0 0-4H12a2 2 0 0 1 0-4h4a5 5 0 0 0 5-5c0-2.8-4-5-9-5Z" />
+      <circle cx="7.5" cy="10" r=".7" />
+      <circle cx="10" cy="6.7" r=".7" />
+      <circle cx="15" cy="7" r=".7" />
+    </symbol>
+    <symbol id="i-users" viewBox="0 0 24 24">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M22 21v-2a4 4 0 0 0-3-3.9m-2-12a4 4 0 0 1 0 7.8" />
+    </symbol>
+    <symbol id="i-gamepad" viewBox="0 0 24 24">
+      <path
+        d="M8.5 6h7a6 6 0 0 1 5.8 7.6l-1.1 4a2.7 2.7 0 0 1-4.7 1l-1.7-2H10l-1.7 2a2.7 2.7 0 0 1-4.7-1l-1-4A6 6 0 0 1 8.5 6Z" />
+      <path d="M7 10v4m-2-2h4m7-1h.01m2 2h.01" />
+    </symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9" />
+      <path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z" />
+    </symbol>
+    <symbol id="i-login" viewBox="0 0 24 24">
+      <path d="M10 17l5-5-5-5m5 5H3m12-9h5a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-5" />
+    </symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24">
+      <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z" />
+      <circle cx="12" cy="12" r="2.5" />
+    </symbol>
+    <symbol id="i-history" viewBox="0 0 24 24">
+      <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
+      <path d="M3 3v5h5m4-1v5l3 2" />
+    </symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+    </symbol>
+    <symbol id="i-help" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9.7 9a2.6 2.6 0 1 1 4.6 1.7c-1 .9-2.3 1.2-2.3 3.3m0 3h.01" />
+    </symbol>
   </svg>
 
   <div class="app-shell">
     <header class="topbar">
-      <a class="brand" href="#welcome" aria-label="Hive Keychain tutorial home"><span class="brand-mark"><svg><use href="#i-key"/></svg></span><span>Keychain</span></a>
+      <a class="brand" href="#welcome" aria-label="Hive Keychain tutorial home"><span class="brand-mark"><svg>
+            <use href="#i-key" />
+          </svg></span><span>Keychain</span></a>
       <nav class="steps" aria-label="Tutorial progress">
         <div class="progress-track"><span id="progress-fill"></span></div>
         <button class="step-tab" data-step="0" aria-label="Step 1: Welcome to Hive"><i></i><span>Welcome</span></button>
         <button class="step-tab" data-step="1" aria-label="Step 2: What is Hive?"><i></i><span>Hive</span></button>
-        <button class="step-tab" data-step="2" aria-label="Step 3: Your Hive Account"><i></i><span>Account</span></button>
-        <button class="step-tab" data-step="3" aria-label="Step 4: HIVE, Hive Power & HBD"><i></i><span>Tokens</span></button>
-        <button class="step-tab" data-step="4" aria-label="Step 5: What can you do on Hive?"><i></i><span>Explore</span></button>
-        <button class="step-tab" data-step="5" aria-label="Step 6: Meet Hive Keychain"><i></i><span>Keychain</span></button>
+        <button class="step-tab" data-step="2"
+          aria-label="Step 3: Your Hive Account"><i></i><span>Account</span></button>
+        <button class="step-tab" data-step="3"
+          aria-label="Step 4: HIVE, Hive Power & HBD"><i></i><span>Tokens</span></button>
+        <button class="step-tab" data-step="4"
+          aria-label="Step 5: What can you do on Hive?"><i></i><span>Explore</span></button>
+        <button class="step-tab" data-step="5"
+          aria-label="Step 6: Meet Hive Keychain"><i></i><span>Keychain</span></button>
         <button class="step-tab" data-step="6" aria-label="Step 7: How login works"><i></i><span>Login</span></button>
         <button class="step-tab" data-step="7" aria-label="Step 8: Stay safe"><i></i><span>Safety</span></button>
         <button class="step-tab" data-step="8" aria-label="Step 9: You're ready"><i></i><span>Ready</span></button>
       </nav>
-      <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode"><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M20 15.2A8 8 0 0 1 8.8 4 8.5 8.5 0 1 0 20 15.2Z"/></svg></button>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode"><svg class="sun"
+          viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="3.5" />
+          <path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+        </svg><svg class="moon" viewBox="0 0 24 24">
+          <path d="M20 15.2A8 8 0 0 1 8.8 4 8.5 8.5 0 1 0 20 15.2Z" />
+        </svg></button>
     </header>
 
     <main id="tutorial" tabindex="-1">
       <section class="page welcome-page is-active" id="welcome" data-page="0" aria-labelledby="welcome-title">
-        <div class="page-head no-eyebrow"><h1 id="welcome-title">Welcome to Hive</h1><p>A blockchain where your account is your identity,<br class="desktop-only"> and Keychain helps you interact with it securely.</p></div>
+        <div class="page-head no-eyebrow">
+          <h1 id="welcome-title">Welcome to Hive</h1>
+          <p>A blockchain where your account is your identity,<br class="desktop-only"> and Keychain helps you interact
+            with it securely.</p>
+        </div>
         <div class="journey">
-          <article><span class="icon-tile"><svg><use href="#i-user"/></svg></span><strong>You</strong><small>your account</small></article><b>→</b>
-          <article><span class="icon-tile accent"><svg><use href="#i-key"/></svg></span><strong>Keychain</strong><small>secure interface</small></article><b>→</b>
-          <article><span class="icon-tile"><svg><use href="#i-network"/></svg></span><strong>Hive</strong><small>the blockchain</small></article><b>→</b>
-          <article><span class="icon-tile"><svg><use href="#i-window"/></svg></span><strong>Apps</strong><small>dApps &amp; games</small></article>
+          <article><span class="icon-tile"><svg>
+                <use href="#i-user" />
+              </svg></span><strong>You</strong><small>your account</small></article><b>→</b>
+          <article><span class="icon-tile accent"><svg>
+                <use href="#i-key" />
+              </svg></span><strong>Keychain</strong><small>secure interface</small></article><b>→</b>
+          <article><span class="icon-tile"><svg>
+                <use href="#i-network" />
+              </svg></span><strong>Hive</strong><small>the blockchain</small></article><b>→</b>
+          <article><span class="icon-tile"><svg>
+                <use href="#i-window" />
+              </svg></span><strong>Apps</strong><small>dApps &amp; games</small></article>
         </div>
       </section>
 
       <section class="page" id="hive" data-page="1" aria-labelledby="hive-title">
-        <div class="page-head"><span class="eyebrow">The big picture</span><h2 id="hive-title">What is Hive?</h2><p>Think of Hive as one shared network that many different apps run on — all using the same account that you control.</p></div>
-        <div class="three-cards">
-          <article class="feature-card"><span class="card-icon"><svg><use href="#i-user"/></svg></span><h3>One account</h3><p>A single Hive account works everywhere — no new sign-up for every app.</p></article>
-          <article class="feature-card"><span class="card-icon"><svg><use href="#i-network"/></svg></span><h3>One ecosystem</h3><p>Social, games, communities, and apps all share the same network and account.</p></article>
-          <article class="feature-card"><span class="card-icon"><svg><use href="#i-key"/></svg></span><h3>You control it</h3><p>Your keys, your account. You decide what gets signed and what doesn't.</p></article>
+        <div class="page-head"><span class="eyebrow">The big picture</span>
+          <h2 id="hive-title">What is Hive?</h2>
+          <p>Think of Hive as one shared network that many different apps run on — all using the same account that you
+            control.</p>
         </div>
-        <div class="ecosystem-map"><span class="map-core"><svg><use href="#i-user"/></svg>Hive Account</span><span>Social</span><span>Games</span><span>Communities</span><span>dApps</span><span>Keychain</span></div>
+        <div class="three-cards">
+          <article class="feature-card"><span class="card-icon"><svg>
+                <use href="#i-user" />
+              </svg></span>
+            <h3>One account</h3>
+            <p>A single Hive account works everywhere — no new sign-up for every app.</p>
+          </article>
+          <article class="feature-card"><span class="card-icon"><svg>
+                <use href="#i-network" />
+              </svg></span>
+            <h3>One ecosystem</h3>
+            <p>Social, games, communities, and apps all share the same network and account.</p>
+          </article>
+          <article class="feature-card"><span class="card-icon"><svg>
+                <use href="#i-key" />
+              </svg></span>
+            <h3>You control it</h3>
+            <p>Your keys, your account. You decide what gets signed and what doesn't.</p>
+          </article>
+        </div>
+        <div class="ecosystem-map"><span class="map-core"><svg>
+              <use href="#i-user" />
+            </svg>Hive
+            Account</span><span>Social</span><span>Games</span><span>Communities</span><span>dApps</span><span>Keychain</span>
+        </div>
       </section>
 
       <section class="page" id="account" data-page="2" aria-labelledby="account-title">
-        <div class="page-head"><span class="eyebrow">Your account</span><h2 id="account-title">Your Hive account, and its keys</h2><p>Hive accounts use different keys for different permissions — so a key for posting can't move your funds, and vice versa.</p></div>
-        <div class="key-grid">
-          <article class="key-card"><div><span class="card-icon"><svg><use href="#i-feather"/></svg></span><small>Social</small></div><h3>Posting Key</h3><p>Used for everyday social actions — posting, commenting, and voting. The key you'll use most often.</p></article>
-          <article class="key-card"><div><span class="card-icon"><svg><use href="#i-wallet"/></svg></span><small>Financial</small></div><h3>Active Key</h3><p>Used for transfers, managing assets, and governance. Anything that moves value or changes your account.</p></article>
-          <article class="key-card"><div><span class="card-icon"><svg><use href="#i-shield"/></svg></span><small>Messaging</small></div><h3>Memo Key</h3><p>Used to encrypt and decrypt private memos attached to transfers, so notes stay confidential.</p></article>
-          <article class="key-card"><div><span class="card-icon"><svg><use href="#i-crown"/></svg></span><small>Master</small></div><h3>Owner Key</h3><p>The most powerful key. It can recover your account and regenerate every other key. Keep it offline.</p></article>
+        <div class="page-head"><span class="eyebrow">Your account</span>
+          <h2 id="account-title">Your Hive account, and its keys</h2>
+          <p>Hive accounts use different keys for different permissions — so a key for posting can't move your funds,
+            and vice versa.</p>
         </div>
-        <div class="account-warning"><strong>Your keys are your responsibility.</strong><p>Keep backups of your keys stored safely offline, and never paste a private key into a website. Keychain keeps your Active, Posting, and Memo keys on your device — your Owner key should stay offline.</p></div>
+        <div class="key-grid">
+          <article class="key-card">
+            <div><span class="card-icon"><svg>
+                  <use href="#i-feather" />
+                </svg></span><small>Social</small></div>
+            <h3>Posting Key</h3>
+            <p>Used for everyday social actions — posting, commenting, and voting. The key you'll use most often.</p>
+          </article>
+          <article class="key-card">
+            <div><span class="card-icon"><svg>
+                  <use href="#i-wallet" />
+                </svg></span><small>Financial</small></div>
+            <h3>Active Key</h3>
+            <p>Used for transfers, managing assets, and governance. Anything that moves value or changes your account.
+            </p>
+          </article>
+          <article class="key-card">
+            <div><span class="card-icon"><svg>
+                  <use href="#i-shield" />
+                </svg></span><small>Messaging</small></div>
+            <h3>Memo Key</h3>
+            <p>Used to encrypt and decrypt private memos attached to transfers, so notes stay confidential.</p>
+          </article>
+          <article class="key-card">
+            <div><span class="card-icon"><svg>
+                  <use href="#i-crown" />
+                </svg></span><small>Master</small></div>
+            <h3>Owner Key</h3>
+            <p>The most powerful key. It can recover your account and regenerate every other key. Keep it offline.</p>
+          </article>
+        </div>
+        <div class="account-warning"><strong>Your keys are your responsibility.</strong>
+          <p>Keep backups of your keys stored safely offline, and never paste a private key into a website. Keychain
+            keeps your Active, Posting, and Memo keys on your device — your Owner key should stay offline.</p>
+        </div>
       </section>
 
       <section class="page" id="tokens" data-page="3" aria-labelledby="tokens-title">
-        <div class="page-head"><span class="eyebrow">The tokens</span><h2 id="tokens-title">HIVE, Hive Power &amp; HBD</h2><p>Three forms of value on Hive. Here's how they relate to each other — in plain terms.</p></div>
-        <div class="token-grid">
-          <article class="token-card"><span class="token-icon coral"><svg><use href="#i-coins"/></svg></span><div><h3>HIVE</h3><p>The main token of the Hive blockchain. Liquid and transferable — used for transactions, trades, and powering up.</p></div></article>
-          <article class="token-card"><span class="token-icon amber"><svg><use href="#i-bolt"/></svg></span><div><h3>Hive Power <small>HP</small></h3><p>HIVE in its vested form. More Hive Power means more voting weight, more resource credits, and more governance influence.</p></div></article>
-          <article class="token-card"><span class="token-icon green"><svg><use href="#i-dollar"/></svg></span><div><h3>HBD</h3><p>A stablecoin pegged to the US dollar. Used for stable-value transactions, and can be locked in savings to earn interest.</p></div></article>
+        <div class="page-head"><span class="eyebrow">The tokens</span>
+          <h2 id="tokens-title">HIVE, Hive Power &amp; HBD</h2>
+          <p>Three forms of value on Hive. Here's how they relate to each other — in plain terms.</p>
         </div>
-        <div class="conversion-list"><article><div><strong>Power Up</strong><span><b>HIVE</b><i>→</i><b>Hive Power</b></span></div><p>Convert liquid HIVE into Hive Power to gain influence and resources.</p></article><article><div><strong>Stable value</strong><span><b>HIVE</b><i>↔</i><b>HBD</b></span></div><p>Move between HIVE and HBD — a dollar-pegged stablecoin for steady value.</p></article></div>
+        <div class="token-grid">
+          <article class="token-card"><span class="token-icon coral"><svg>
+                <use href="#i-coins" />
+              </svg></span>
+            <div>
+              <h3>HIVE</h3>
+              <p>The main token of the Hive blockchain. Liquid and transferable — used for transactions, trades, and
+                powering up.</p>
+            </div>
+          </article>
+          <article class="token-card"><span class="token-icon amber"><svg>
+                <use href="#i-bolt" />
+              </svg></span>
+            <div>
+              <h3>Hive Power <small>HP</small></h3>
+              <p>HIVE in its vested form. More Hive Power means more voting weight, more resource credits, and more
+                governance influence.</p>
+            </div>
+          </article>
+          <article class="token-card"><span class="token-icon green"><svg>
+                <use href="#i-dollar" />
+              </svg></span>
+            <div>
+              <h3>HBD</h3>
+              <p>A stablecoin pegged to the US dollar. Used for stable-value transactions, and can be locked in savings
+                to earn interest.</p>
+            </div>
+          </article>
+        </div>
+        <div class="conversion-list">
+          <article>
+            <div><strong>Power Up</strong><span><b>HIVE</b><i>→</i><b>Hive Power</b></span></div>
+            <p>Convert liquid HIVE into Hive Power to gain influence and resources.</p>
+          </article>
+          <article>
+            <div><strong>Stable value</strong><span><b>HIVE</b><i>↔</i><b>HBD</b></span></div>
+            <p>Move between HIVE and HBD — a dollar-pegged stablecoin for steady value.</p>
+          </article>
+        </div>
       </section>
 
       <section class="page" id="explore" data-page="4" aria-labelledby="explore-title">
-        <div class="page-head"><span class="eyebrow">The ecosystem</span><h2 id="explore-title">What can you do on Hive?</h2><p>One account opens up a whole ecosystem. Tap a card to see the kinds of things you can do.</p></div>
-        <div class="activity-grid">
-          <button class="activity-card coral" aria-expanded="false"><span class="activity-icon"><svg><use href="#i-palette"/></svg></span><span class="activity-arrow">→</span><small>Share your voice</small><strong>Create</strong><p>Publish posts, leave comments, vote on content, and build communities around what you love.</p><span class="tag-row"><i>Posts</i><i>Comments</i><i>Votes</i><i>Communities</i></span></button>
-          <button class="activity-card blue" aria-expanded="false"><span class="activity-icon"><svg><use href="#i-users"/></svg></span><span class="activity-arrow">→</span><small>Find your people</small><strong>Connect</strong><p>Join communities, follow people, and take part in social experiences across the network.</p><span class="tag-row"><i>Communities</i><i>People</i><i>Social experiences</i></span></button>
-          <button class="activity-card purple" aria-expanded="false"><span class="activity-icon"><svg><use href="#i-gamepad"/></svg></span><span class="activity-arrow">→</span><small>Have some fun</small><strong>Play</strong><p>Dive into Hive games and interactive applications where your account and assets carry over.</p><span class="tag-row"><i>Hive games</i><i>Interactive apps</i></span></button>
-          <button class="activity-card green" aria-expanded="false"><span class="activity-icon"><svg><use href="#i-compass"/></svg></span><span class="activity-arrow">→</span><small>Go further</small><strong>Explore</strong><p>Manage assets and tokens, discover markets, make swaps, and try out new applications.</p><span class="tag-row"><i>Assets</i><i>Tokens</i><i>Markets</i><i>Swaps</i><i>Other apps</i></span></button>
+        <div class="page-head"><span class="eyebrow">The ecosystem</span>
+          <h2 id="explore-title">What can you do on Hive?</h2>
+          <p>One account opens up a whole ecosystem. Tap a card to see the kinds of things you can do.</p>
         </div>
-        <p class="config-note">Featured applications can be added to the content configuration without changing this layout.</p>
+        <div class="activity-grid">
+          <button class="activity-card coral" aria-expanded="false"><span class="activity-icon"><svg>
+                <use href="#i-palette" />
+              </svg></span><span class="activity-arrow">→</span><small>Share your voice</small><strong>Create</strong>
+            <p>Publish posts, leave comments, vote on content, and build communities around what you love.</p><span
+              class="tag-row"><i>Posts</i><i>Comments</i><i>Votes</i><i>Communities</i></span>
+          </button>
+          <button class="activity-card blue" aria-expanded="false"><span class="activity-icon"><svg>
+                <use href="#i-users" />
+              </svg></span><span class="activity-arrow">→</span><small>Find your people</small><strong>Connect</strong>
+            <p>Join communities, follow people, and take part in social experiences across the network.</p><span
+              class="tag-row"><i>Communities</i><i>People</i><i>Social experiences</i></span>
+          </button>
+          <button class="activity-card purple" aria-expanded="false"><span class="activity-icon"><svg>
+                <use href="#i-gamepad" />
+              </svg></span><span class="activity-arrow">→</span><small>Have some fun</small><strong>Play</strong>
+            <p>Dive into Hive games and interactive applications where your account and assets carry over.</p><span
+              class="tag-row"><i>Hive games</i><i>Interactive apps</i></span>
+          </button>
+          <button class="activity-card green" aria-expanded="false"><span class="activity-icon"><svg>
+                <use href="#i-compass" />
+              </svg></span><span class="activity-arrow">→</span><small>Go further</small><strong>Explore</strong>
+            <p>Manage assets and tokens, discover markets, make swaps, and try out new applications.</p><span
+              class="tag-row"><i>Assets</i><i>Tokens</i><i>Markets</i><i>Swaps</i><i>Other apps</i></span>
+          </button>
+        </div>
+        <p class="config-note">Featured applications can be added to the content configuration without changing this
+          layout.</p>
       </section>
 
       <section class="page" id="keychain" data-page="5" aria-labelledby="keychain-title">
-        <div class="page-head"><span class="eyebrow">The interface</span><h2 id="keychain-title">Meet Hive Keychain</h2><p>Hive is the network. dApps are the applications. Keychain is the secure interface that connects you to both — without exposing your keys.</p></div>
+        <div class="page-head"><span class="eyebrow">The interface</span>
+          <h2 id="keychain-title">Meet Hive Keychain</h2>
+          <p>Hive is the network. dApps are the applications. Keychain is the secure interface that connects you to both
+            — without exposing your keys.</p>
+        </div>
         <div class="interface-grid">
-          <article class="interface-card"><h3><span class="card-icon"><svg><use href="#i-login"/></svg></span>Login</h3><div class="mini-flow"><span><svg><use href="#i-window"/></svg>dApp</span><i></i><span class="hot"><svg><use href="#i-login"/></svg>Login with Keychain</span><i></i><span><svg><use href="#i-key"/></svg>Keychain</span><i></i><span>Approve</span><i></i><span>Logged in</span></div><p>A site asks who you are. Keychain proves it — without handing over a password.</p></article>
-          <article class="interface-card"><h3><span class="card-icon"><svg><use href="#i-feather"/></svg></span>Sign</h3><div class="mini-flow"><span><svg><use href="#i-window"/></svg>dApp</span><i></i><span>Transaction request</span><i></i><span class="hot"><svg><use href="#i-key"/></svg>Keychain</span><i></i><span>Review</span><i></i><span>Approve</span><i></i><span>Hive</span></div><p>A site wants an action. You review it, approve it, and Keychain signs it on the blockchain.</p></article>
-          <article class="interface-card"><h3><span class="card-icon"><svg><use href="#i-shield"/></svg></span>Keys</h3><div class="key-visual"><span>Your private keys</span><b>Stay with you</b><span>Keychain signs requests</span></div><p>Your keys never leave your device. Keychain only uses them to sign what you approve.</p></article>
+          <article class="interface-card">
+            <h3><span class="card-icon"><svg>
+                  <use href="#i-login" />
+                </svg></span>Login</h3>
+            <div class="mini-flow"><span><svg>
+                  <use href="#i-window" />
+                </svg>dApp</span><i></i><span class="hot"><svg>
+                  <use href="#i-login" />
+                </svg>Login with Keychain</span><i></i><span><svg>
+                  <use href="#i-key" />
+                </svg>Keychain</span><i></i><span>Approve</span><i></i><span>Logged in</span></div>
+            <p>A site asks who you are. Keychain proves it — without handing over a password.</p>
+          </article>
+          <article class="interface-card">
+            <h3><span class="card-icon"><svg>
+                  <use href="#i-feather" />
+                </svg></span>Sign</h3>
+            <div class="mini-flow"><span><svg>
+                  <use href="#i-window" />
+                </svg>dApp</span><i></i><span>Transaction request</span><i></i><span class="hot"><svg>
+                  <use href="#i-key" />
+                </svg>Keychain</span><i></i><span>Review</span><i></i><span>Approve</span><i></i><span>Hive</span></div>
+            <p>A site wants an action. You review it, approve it, and Keychain signs it on the blockchain.</p>
+          </article>
+          <article class="interface-card">
+            <h3><span class="card-icon"><svg>
+                  <use href="#i-shield" />
+                </svg></span>Keys</h3>
+            <div class="key-visual"><span>Your private keys</span><b>Stay with you</b><span>Keychain signs
+                requests</span></div>
+            <p>Your keys never leave your device. Keychain only uses them to sign what you approve.</p>
+          </article>
         </div>
       </section>
 
       <section class="page" id="login" data-page="6" aria-labelledby="login-title">
-        <div class="page-head"><span class="eyebrow">See it in action</span><h2 id="login-title">How login with Keychain works</h2><p>If you have Hive Keychain installed, this sends a real request to sign a unique login challenge with your Posting key. Otherwise it runs as a simulation.</p></div>
-        <div class="login-notice" id="login-notice"><span>…</span><p>Checking this browser for Hive Keychain…</p></div>
+        <div class="page-head"><span class="eyebrow">See it in action</span>
+          <h2 id="login-title">How login with Keychain works</h2>
+          <p>If you have Hive Keychain installed, this sends a real request to sign a unique login challenge with your
+            Posting key. Otherwise it runs as a simulation.</p>
+        </div>
+        <div class="login-notice" id="login-notice" hidden style="display: none"></div>
         <div class="demo-label"><i></i>Checking Keychain connection</div>
         <div class="browser-demo">
           <div class="browser-bar"><i></i><i></i><i></i><span>example.hive.app</span></div>
-          <div class="browser-body"><div class="demo-brand"><span class="brand-mark"><svg><use href="#i-key"/></svg></span><strong>Keychain</strong></div><h3>Welcome to Hive</h3><p>Sign in to continue to this application.</p><button class="login-button" id="login-button"><svg><use href="#i-key"/></svg><span>Login with Keychain</span></button><p class="login-progress" id="login-progress"></p></div>
-          <div class="approval-panel" id="approval-panel" aria-hidden="true"><div class="approval-head"><span class="brand-mark"><svg><use href="#i-key"/></svg></span><p><strong>Hive Keychain</strong><small>Confirmation required</small></p></div><div class="approval-body"><h4>Login request</h4><dl><div><dt>Website</dt><dd>example.hive.app</dd></div><div><dt>Account</dt><dd>@youraccount</dd></div><div><dt>Type</dt><dd>Authentication</dd></div></dl><p><svg><use href="#i-shield"/></svg>No private key is shared with this website.</p><div><button class="ghost" id="login-cancel">Cancel</button><button class="login-button" id="login-approve">Approve</button></div></div></div>
+          <div class="browser-body">
+            <div class="demo-brand"><span class="brand-mark"><svg>
+                  <use href="#i-key" />
+                </svg></span><strong>Keychain</strong></div>
+            <h3>Welcome to Hive</h3>
+            <p>Sign in to continue to this application.</p><button class="login-button" id="login-button"><svg>
+                <use href="#i-key" />
+              </svg><span>Login with Keychain</span></button>
+            <p class="login-progress" id="login-progress"></p>
+          </div>
+          <div class="approval-panel" id="approval-panel" aria-hidden="true">
+            <div class="approval-head"><span class="brand-mark"><svg>
+                  <use href="#i-key" />
+                </svg></span>
+              <p><strong>Hive Keychain</strong><small>Confirmation required</small></p>
+            </div>
+            <div class="approval-body">
+              <h4>Login request</h4>
+              <dl>
+                <div>
+                  <dt>Website</dt>
+                  <dd>example.hive.app</dd>
+                </div>
+                <div>
+                  <dt>Account</dt>
+                  <dd>@youraccount</dd>
+                </div>
+                <div>
+                  <dt>Type</dt>
+                  <dd>Authentication</dd>
+                </div>
+              </dl>
+              <p><svg>
+                  <use href="#i-shield" />
+                </svg>No private key is shared with this website.</p>
+              <div><button class="ghost" id="login-cancel">Cancel</button><button class="login-button"
+                  id="login-approve">Approve</button></div>
+            </div>
+          </div>
         </div>
       </section>
 
       <section class="page" id="safety" data-page="7" aria-labelledby="safety-title">
-        <div class="page-head"><span class="eyebrow">Security</span><h2 id="safety-title">Stay safe</h2><p>Three rules that keep your account secure. That's it — keep these in mind and you're most of the way there.</p></div>
-        <div class="safety-grid">
-          <article><header><b>1</b><svg><use href="#i-key"/></svg></header><h3>Never share your private keys</h3><p>No legitimate app or person will ever ask for your private keys. Keep them to yourself.</p></article>
-          <article><header><b>2</b><svg><use href="#i-eye"/></svg></header><h3>Check what you're approving</h3><p>Read the request before you tap Approve. Understand what action Keychain is about to sign.</p></article>
-          <article><header><b>3</b><svg><use href="#i-history"/></svg></header><h3>Keep your keys backed up</h3><p>Store your keys safely offline. A secure backup is how you recover access if you ever need to.</p></article>
+        <div class="page-head"><span class="eyebrow">Security</span>
+          <h2 id="safety-title">Stay safe</h2>
+          <p>Three rules that keep your account secure. That's it — keep these in mind and you're most of the way there.
+          </p>
         </div>
-        <div class="danger-note"><strong>A website asks you to paste your Active Key?</strong><p>Don't do it. Use Keychain to approve the action instead — your key never leaves your device.</p></div>
+        <div class="safety-grid">
+          <article>
+            <header><b>1</b><svg>
+                <use href="#i-key" />
+              </svg></header>
+            <h3>Never share your private keys</h3>
+            <p>No legitimate app or person will ever ask for your private keys. Keep them to yourself.</p>
+          </article>
+          <article>
+            <header><b>2</b><svg>
+                <use href="#i-eye" />
+              </svg></header>
+            <h3>Check what you're approving</h3>
+            <p>Read the request before you tap Approve. Understand what action Keychain is about to sign.</p>
+          </article>
+          <article>
+            <header><b>3</b><svg>
+                <use href="#i-history" />
+              </svg></header>
+            <h3>Keep your keys backed up</h3>
+            <p>Store your keys safely offline. A secure backup is how you recover access if you ever need to.</p>
+          </article>
+        </div>
+        <div class="danger-note"><strong>A website asks you to paste your Active Key?</strong>
+          <p>Don't do it. Use Keychain to approve the action instead — your key never leaves your device.</p>
+        </div>
       </section>
 
       <section class="page ready-page" id="ready" data-page="8" aria-labelledby="ready-title">
-        <div class="page-head no-eyebrow"><h2 id="ready-title">Welcome to Hive.</h2><p>You now know the basics. The rest is yours to explore.</p></div>
-        <div class="powered"><span class="brand-mark"><svg><use href="#i-key"/></svg></span><p><strong>Keychain</strong><small>Powered by Hive</small></p></div>
-        <div class="final-links"><a class="primary-link" href="https://hive.io" target="_blank" rel="noreferrer"><svg><use href="#i-globe"/></svg><span>Explore Hive</span><b>→</b></a><a href="https://hive-keychain.com" target="_blank" rel="noreferrer"><svg><use href="#i-compass"/></svg><span>Discover dApps</span><b>→</b></a><a href="https://hive-keychain.com/download" target="_blank" rel="noreferrer"><svg><use href="#i-key"/></svg><span>Open Keychain</span><b>→</b></a><a href="https://hive-keychain.com/help" target="_blank" rel="noreferrer"><svg><use href="#i-help"/></svg><span>Get Help</span><b>→</b></a></div>
+        <div class="page-head no-eyebrow">
+          <h2 id="ready-title">Welcome to Hive.</h2>
+          <p>You now know the basics. The rest is yours to explore.</p>
+        </div>
+        <div class="powered"><span class="brand-mark"><svg>
+              <use href="#i-key" />
+            </svg></span>
+          <p><strong>Keychain</strong><small>Powered by Hive</small></p>
+        </div>
+        <div class="final-links"><a class="primary-link" href="https://hive.io" target="_blank" rel="noreferrer"><svg>
+              <use href="#i-globe" />
+            </svg><span>Explore Hive</span><b>→</b></a><a href="https://hive-keychain.com" target="_blank"
+            rel="noreferrer"><svg>
+              <use href="#i-compass" />
+            </svg><span>Discover dApps</span><b>→</b></a><a href="https://hive-keychain.com/download" target="_blank"
+            rel="noreferrer"><svg>
+              <use href="#i-key" />
+            </svg><span>Open Keychain</span><b>→</b></a><a href="https://hive-keychain.com/help" target="_blank"
+            rel="noreferrer"><svg>
+              <use href="#i-help" />
+            </svg><span>Get Help</span><b>→</b></a></div>
       </section>
     </main>
 
-    <footer class="bottom-nav"><button id="previous" class="nav-back" disabled aria-label="Previous"><span>←</span><em>Previous</em></button><span class="page-count"><b id="current-page">1</b> / 9</span><button id="next" class="nav-next">Start exploring <span>→</span></button></footer>
+    <footer class="bottom-nav"><button id="previous" class="nav-back" disabled
+        aria-label="Previous"><span>←</span><em>Previous</em></button><span class="page-count"><b
+          id="current-page">1</b> / 9</span><button id="next" class="nav-next">Start exploring <span>→</span></button>
+    </footer>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </div>
   <script src="./app.js"></script>
 </body>
+
 </html>
