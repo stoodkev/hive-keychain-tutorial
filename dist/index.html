@@ -25,8 +25,11 @@
           <button class="step-tab" data-step="1" aria-label="Step 2: What is Hive?"><i></i><span>Hive</span></button>
           <button class="step-tab" data-step="2" aria-label="Step 3: Your account"><i></i><span>Account</span></button>
           <button class="step-tab" data-step="3" aria-label="Step 4: Hive tokens"><i></i><span>Tokens</span></button>
-          <button class="step-tab" data-step="4" aria-label="Step 5: Keychain demo"><i></i><span>Keychain</span></button>
-          <button class="step-tab" data-step="5" aria-label="Step 6: You are ready"><i></i><span>Ready</span></button>
+          <button class="step-tab" data-step="4" aria-label="Step 5: Explore Hive"><i></i><span>Explore</span></button>
+          <button class="step-tab" data-step="5" aria-label="Step 6: Keychain demo"><i></i><span>Keychain</span></button>
+          <button class="step-tab" data-step="6" aria-label="Step 7: How login works"><i></i><span>Login</span></button>
+          <button class="step-tab" data-step="7" aria-label="Step 8: Stay safe"><i></i><span>Safety</span></button>
+          <button class="step-tab" data-step="8" aria-label="Step 9: You are ready"><i></i><span>Ready</span></button>
         </nav>
 
         <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">
@@ -117,7 +120,22 @@
           <div class="inline-demo" id="token-demo" aria-live="polite">Choose a token to see how it is commonly used.</div>
         </section>
 
-        <section class="page" data-page="4" id="keychain" aria-labelledby="keychain-title">
+        <section class="page" data-page="4" id="explore" aria-labelledby="explore-title">
+          <div class="hero-copy compact">
+            <p class="eyebrow">One account, many places</p>
+            <h2 id="explore-title">What can you do on Hive?</h2>
+            <p class="lede">Use the same identity across social apps, communities, games, and creator tools.</p>
+          </div>
+          <div class="explore-grid">
+            <article class="explore-card"><span class="explore-icon">✦</span><div><h3>Post &amp; connect</h3><p>Publish ideas, follow people, vote, and join conversations.</p></div></article>
+            <article class="explore-card"><span class="explore-icon">#</span><div><h3>Find communities</h3><p>Discover focused spaces for art, tech, travel, and more.</p></div></article>
+            <article class="explore-card"><span class="explore-icon">◇</span><div><h3>Play &amp; collect</h3><p>Use your Hive account in games and digital collections.</p></div></article>
+            <article class="explore-card"><span class="explore-icon">↗</span><div><h3>Create &amp; earn</h3><p>Build an audience and receive rewards from the network.</p></div></article>
+          </div>
+          <a class="ecosystem-link" href="https://hive.io/" target="_blank" rel="noreferrer">Browse the Hive ecosystem <span>↗</span></a>
+        </section>
+
+        <section class="page" data-page="5" id="keychain" aria-labelledby="keychain-title">
           <div class="hero-copy compact">
             <p class="eyebrow">Try it safely</p>
             <h2 id="keychain-title">Approve with Keychain</h2>
@@ -138,7 +156,40 @@
           </div>
         </section>
 
-        <section class="page" data-page="5" id="ready" aria-labelledby="ready-title">
+        <section class="page" data-page="6" id="login" aria-labelledby="login-title">
+          <div class="hero-copy compact">
+            <p class="eyebrow">No password handoff</p>
+            <h2 id="login-title">How login works</h2>
+            <p class="lede">The app asks for proof. Keychain signs a challenge locally, without revealing your private key.</p>
+          </div>
+          <div class="login-flow" id="login-flow">
+            <article><span class="flow-number">01</span><div><strong>App requests login</strong><small>A one-time challenge is prepared.</small></div></article>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <article><span class="flow-number">02</span><div><strong>Keychain signs</strong><small>You review the account and approve.</small></div></article>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <article><span class="flow-number">03</span><div><strong>Session starts</strong><small>The app verifies the signature.</small></div></article>
+          </div>
+          <div class="login-demo">
+            <button class="primary" id="play-login">Play login demo</button>
+            <span id="login-status" aria-live="polite">Ready to simulate a secure login.</span>
+          </div>
+        </section>
+
+        <section class="page" data-page="7" id="safety" aria-labelledby="safety-title">
+          <div class="hero-copy compact">
+            <p class="eyebrow">Pause before you approve</p>
+            <h2 id="safety-title">Stay safe</h2>
+            <p class="lede">Keychain protects your keys, but every approval still belongs to you.</p>
+          </div>
+          <div class="safety-grid">
+            <article class="safety-card"><span class="safety-mark">✓</span><h3>Check the website</h3><p>Confirm the domain before approving a login or transaction.</p></article>
+            <article class="safety-card"><span class="safety-mark">✓</span><h3>Read the action</h3><p>Verify the account, amount, recipient, and permission requested.</p></article>
+            <article class="safety-card warning"><span class="safety-mark">!</span><h3>Never share keys</h3><p>Legitimate apps will not ask you to paste a private key into a page.</p></article>
+          </div>
+          <p class="tip"><span>i</span> If a request feels wrong, reject it. You can always try again from a trusted page.</p>
+        </section>
+
+        <section class="page" data-page="8" id="ready" aria-labelledby="ready-title">
           <div class="completion-mark">✓</div>
           <div class="hero-copy compact">
             <p class="eyebrow">That’s the foundation</p>
@@ -159,7 +210,7 @@
 
       <footer class="bottom-nav">
         <button class="nav-button previous" id="previous" disabled><span>←</span> Previous</button>
-        <span class="page-count" aria-live="polite"><b id="current-page">1</b> / 6</span>
+        <span class="page-count" aria-live="polite"><b id="current-page">1</b> / 9</span>
         <button class="nav-button next" id="next">Start exploring <span>→</span></button>
       </footer>
       <div class="toast" id="toast" role="status" aria-live="polite"></div>

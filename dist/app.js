@@ -12,7 +12,7 @@
   let maxVisited = 0;
   let toastTimer;
 
-  const labels = ['Start exploring', 'Continue', 'Continue', 'Try Keychain', 'Finish', 'Restart'];
+  const labels = ['Start exploring', 'Continue', 'Continue', 'Explore apps', 'Meet Keychain', 'See how login works', 'Review safety', 'Finish', 'Restart'];
   const hashes = pages.map(page => page.id);
 
   function announce(message) {
@@ -92,6 +92,27 @@
   document.querySelector('#approve-request').addEventListener('click', () => {
     setRequest(false);
     announce('Approved! The demo comment was signed safely.');
+  });
+
+  const playLogin = document.querySelector('#play-login');
+  const loginSteps = [...document.querySelectorAll('#login-flow article')];
+  const loginStatus = document.querySelector('#login-status');
+  let loginRunning = false;
+  playLogin.addEventListener('click', async () => {
+    if (loginRunning) return;
+    loginRunning = true;
+    playLogin.disabled = true;
+    loginSteps.forEach(step => step.classList.remove('active'));
+    const messages = ['App created a one-time challenge…', 'Keychain signed it locally…', 'Login verified — no private key was shared.'];
+    for (let step = 0; step < loginSteps.length; step += 1) {
+      loginSteps.forEach(item => item.classList.remove('active'));
+      loginSteps[step].classList.add('active');
+      loginStatus.textContent = messages[step];
+      await new Promise(resolve => setTimeout(resolve, 700));
+    }
+    playLogin.textContent = 'Run again';
+    playLogin.disabled = false;
+    loginRunning = false;
   });
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && keychainPanel.classList.contains('open')) setRequest(false);
