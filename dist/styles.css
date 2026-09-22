@@ -10,7 +10,7 @@
   --accent: #ef334f;
   --accent-strong: #dc2626;
   --soft: rgba(239, 51, 79, 0.12);
-  --hex: rgba(239, 51, 79, 0.045);
+  --hex-opacity: 0.13;
   --shadow: 0 12px 34px rgba(0, 0, 0, 0.2);
   --shadow-hover: 0 18px 42px rgba(0, 0, 0, 0.28);
   --radius-card: 8px;
@@ -27,7 +27,7 @@
   --accent: #dc2626;
   --accent-strong: #b91c1c;
   --soft: rgba(220, 38, 38, 0.08);
-  --hex: rgba(220, 38, 38, 0.035);
+  --hex-opacity: 0.09;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 10px 28px rgba(17, 24, 39, 0.05);
   --shadow-hover: 0 18px 36px rgba(17, 24, 39, 0.12);
 }
@@ -250,46 +250,8 @@ main:before {
   position: fixed;
   z-index: -1;
   inset: 74px 0 72px;
-  background-image:
-    linear-gradient(
-      30deg,
-      var(--hex) 12%,
-      transparent 12.5%,
-      transparent 87%,
-      var(--hex) 87.5%,
-      var(--hex)
-    ),
-    linear-gradient(
-      150deg,
-      var(--hex) 12%,
-      transparent 12.5%,
-      transparent 87%,
-      var(--hex) 87.5%,
-      var(--hex)
-    ),
-    linear-gradient(
-      30deg,
-      var(--hex) 12%,
-      transparent 12.5%,
-      transparent 87%,
-      var(--hex) 87.5%,
-      var(--hex)
-    ),
-    linear-gradient(
-      150deg,
-      var(--hex) 12%,
-      transparent 12.5%,
-      transparent 87%,
-      var(--hex) 87.5%,
-      var(--hex)
-    );
-  background-size: 74px 130px;
-  background-position:
-    0 0,
-    0 0,
-    37px 65px,
-    37px 65px;
-  mask-image: radial-gradient(ellipse at center, #000 0%, transparent 72%);
+  background: url("./assets/images/hexagon-field.svg") center / cover no-repeat;
+  opacity: var(--hex-opacity);
   pointer-events: none;
 }
 .page {
@@ -402,13 +364,14 @@ main:before {
   background: var(--accent);
 }
 .icon-tile.keychain-tile {
-  overflow: hidden;
+  overflow: visible;
+  border-radius: 0;
   background: transparent;
 }
 .keychain-tile img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 .icon-tile svg,
 .card-icon svg,
@@ -431,12 +394,21 @@ main:before {
   gap: 16px;
 }
 .feature-card {
-  min-height: 195px;
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  align-items: center;
+  gap: 14px;
   padding: 25px;
   border: 1px solid var(--border);
   border-radius: 17px;
   background: var(--surface);
   box-shadow: var(--shadow);
+}
+.feature-card .card-icon {
+  margin: 0;
+}
+.feature-card p {
+  grid-column: 1 / -1;
 }
 .card-icon {
   width: 42px;
@@ -451,6 +423,9 @@ main:before {
 .token-card h3 {
   margin: 0 0 8px;
   font-size: 1.05rem;
+}
+.feature-card > h3 {
+  margin: 0;
 }
 .feature-card p,
 .key-card p,
@@ -503,9 +478,10 @@ main:before {
   box-shadow: var(--shadow);
 }
 .key-card > div {
-  display: flex;
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
   align-items: center;
-  justify-content: space-between;
+  gap: 12px;
 }
 .key-card .card-icon {
   margin: 0;
@@ -518,7 +494,10 @@ main:before {
   text-transform: uppercase;
 }
 .key-card h3 {
-  margin-top: 17px;
+  margin: 0;
+}
+.key-card p {
+  margin-top: 14px;
 }
 .account-warning,
 .danger-note {
@@ -627,7 +606,6 @@ main:before {
 .activity-card {
   position: relative;
   display: block;
-  min-height: 190px;
   padding: 23px;
   border: 1px solid var(--border);
   border-radius: 17px;
@@ -637,6 +615,12 @@ main:before {
   box-shadow: var(--shadow);
   transition: border-color 0.2s ease;
 }
+.activity-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-right: 30px;
+}
 .activity-card:hover,
 .activity-card[aria-expanded="true"] {
   border-color: color-mix(in srgb, currentColor 38%, var(--border));
@@ -644,9 +628,12 @@ main:before {
 .activity-card .activity-icon {
   width: 43px;
   height: 43px;
-  margin-bottom: 14px;
+  flex: 0 0 auto;
   border-radius: 12px;
   background: color-mix(in srgb, currentColor 12%, transparent);
+}
+.activity-label {
+  display: grid;
 }
 .activity-arrow {
   position: absolute;
@@ -658,7 +645,7 @@ main:before {
 .activity-card[aria-expanded="true"] .activity-arrow {
   transform: rotate(90deg);
 }
-.activity-card > small {
+.activity-label small {
   display: block;
   color: currentColor;
   font-size: 0.67rem;
@@ -666,14 +653,14 @@ main:before {
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
-.activity-card > strong {
+.activity-label strong {
   display: block;
-  margin: 4px 0 7px;
+  margin-top: 2px;
   color: var(--text);
   font-size: 1.28rem;
 }
 .activity-card > p {
-  margin: 0;
+  margin: 14px 0 0;
   color: var(--muted);
   font-size: 0.86rem;
 }
@@ -1048,25 +1035,19 @@ main:before {
 .safety-grid header b {
   width: 38px;
   height: 38px;
+  flex: 0 0 auto;
   display: grid;
   place-items: center;
   border-radius: 50%;
   background: var(--soft);
   color: var(--accent);
 }
-.safety-grid header svg {
-  width: 22px;
-  height: 22px;
-  fill: none;
-  stroke: var(--muted);
-  stroke-width: 1.7;
-}
 .safety-grid h3 {
-  margin: 19px 0 7px;
+  margin: 0;
   font-size: 1rem;
 }
 .safety-grid p {
-  margin: 0;
+  margin: 14px 0 0;
   color: var(--muted);
   font-size: 0.86rem;
 }
@@ -1086,6 +1067,18 @@ main:before {
   justify-content: center;
   gap: 11px;
   margin-bottom: 26px;
+}
+.powered .powered-logo {
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.powered-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .powered p {
   display: grid;
@@ -1302,9 +1295,6 @@ main:before {
   .conversion-list {
     grid-template-columns: 1fr;
   }
-  .feature-card {
-    min-height: 180px;
-  }
   .ecosystem-map {
     padding-bottom: 10px;
   }
@@ -1316,9 +1306,6 @@ main:before {
   }
   .token-card {
     padding: 22px;
-  }
-  .activity-card {
-    min-height: 190px;
   }
   .interface-card {
     min-height: 420px;
