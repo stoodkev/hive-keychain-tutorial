@@ -76,7 +76,55 @@
   const loginButton = document.querySelector('#login-button');
   const loginProgress = document.querySelector('#login-progress');
   const approvalPanel = document.querySelector('#approval-panel');
+  const loginNotice = document.querySelector('#login-notice');
+  const demoLabel = document.querySelector('.demo-label');
+  let keychainAvailable = false;
   let requestTimer;
+
+  function setKeychainMode(available) {
+    keychainAvailable = available;
+    loginButton.disabled = false;
+    loginButton.querySelector('span').textContent = 'Login with Keychain';
+    if (available) {
+      loginNotice.innerHTML = '<span>✓</span><p>Hive Keychain is connected. Clicking login will open a real request for your approval.</p>';
+      demoLabel.innerHTML = '<i></i>Live Keychain request · no transaction is broadcast';
+    } else {
+      loginNotice.innerHTML = '<span>⇩</span><p>Hive Keychain isn\'t installed in this browser, so this step runs as a simulation. <a href="https://hive-keychain.com/" target="_blank" rel="noreferrer">Install Keychain</a> to try the real thing.</p>';
+      demoLabel.innerHTML = '<i></i>Tutorial demonstration · not a real request';
+    }
+  }
+
+  function detectKeychain() {
+    loginButton.disabled = true;
+    loginButton.querySelector('span').textContent = 'Checking for Keychain…';
+    const injectionDeadline = Date.now() + 1500;
+
+    function attemptHandshake() {
+      const keychain = window.hive_keychain;
+      if (!keychain || typeof keychain.requestHandshake !== 'function') {
+        if (Date.now() < injectionDeadline) setTimeout(attemptHandshake, 100);
+        else setKeychainMode(false);
+        return;
+      }
+
+      let answered = false;
+      const timeout = setTimeout(() => {
+        if (!answered) setKeychainMode(false);
+      }, 1500);
+      try {
+        keychain.requestHandshake(() => {
+          answered = true;
+          clearTimeout(timeout);
+          setKeychainMode(true);
+        });
+      } catch (error) {
+        clearTimeout(timeout);
+        setKeychainMode(false);
+      }
+    }
+    attemptHandshake();
+  }
+
   function closeApproval() {
     clearTimeout(requestTimer);
     approvalPanel.classList.remove('open');
@@ -85,7 +133,45 @@
     loginButton.disabled = false;
     loginButton.querySelector('span').textContent = 'Login with Keychain';
   }
+
+  function requestKeychainLogin() {
+    const nonce = typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`;
+    const challenge = [
+      'Hive Keychain tutorial login',
+      `Domain: ${location.host || 'local tutorial'}`,
+      `Issued: ${new Date().toISOString()}`,
+      `Nonce: ${nonce}`,
+    ].join('\n');
+
+    loginButton.disabled = true;
+    loginButton.querySelector('span').textContent = 'Waiting for Keychain…';
+    loginProgress.textContent = 'Review the real login request in Hive Keychain.';
+    try {
+      window.hive_keychain.requestSignBuffer(null, challenge, 'Posting', response => {
+        if (response && response.success) {
+          const username = (response.data && response.data.username) || response.username;
+          loginButton.querySelector('span').textContent = 'Logged in';
+          loginProgress.textContent = `${username ? `Authenticated as @${username}. ` : 'Authentication approved. '}Your private key stayed in Keychain.`;
+          announce('Real Keychain login approved.');
+          return;
+        }
+
+        loginButton.disabled = false;
+        loginButton.querySelector('span').textContent = 'Login with Keychain';
+        loginProgress.textContent = response && response.message ? response.message : 'The Keychain request was cancelled.';
+        announce('Keychain login was not approved.');
+      }, null, 'Hive Keychain tutorial login');
+    } catch (error) {
+      setKeychainMode(false);
+      loginProgress.textContent = 'Keychain could not open the request. The tutorial has switched to simulation mode.';
+    }
+  }
+
   loginButton.addEventListener('click', () => {
+    if (keychainAvailable) {
+      requestKeychainLogin();
+      return;
+    }
     loginButton.disabled = true;
     loginButton.querySelector('span').textContent = 'Sending request…';
     loginProgress.textContent = 'Sending request to Keychain…';
@@ -109,6 +195,7 @@
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && approvalPanel.classList.contains('open')) closeApproval();
   });
+  detectKeychain();
 
   const initial = Math.max(0, hashes.indexOf(location.hash.slice(1)));
   maxVisited = initial;
