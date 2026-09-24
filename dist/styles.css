@@ -373,6 +373,11 @@ main:before {
   height: 100%;
   object-fit: contain;
 }
+.icon-tile .hive-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
 .icon-tile svg,
 .card-icon svg,
 .token-icon svg,
@@ -536,6 +541,11 @@ main:before {
   height: 46px;
   flex: 0 0 auto;
   border-radius: 12px;
+}
+.token-icon img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
 }
 .token-icon.coral {
   background: rgba(246, 46, 82, 0.12);
