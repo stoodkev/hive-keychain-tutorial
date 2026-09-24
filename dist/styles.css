@@ -1156,6 +1156,9 @@ main:before {
 .nav-back {
   color: var(--muted);
 }
+.nav-back.is-hidden {
+  display: none;
+}
 .nav-back em {
   font-style: normal;
 }

@@ -72,6 +72,7 @@
       tab.disabled = i > maxVisited;
       tab.setAttribute("aria-current", i === index ? "step" : "false");
     });
+    previous.style.display = index === 0 ? "none" : "";
     previous.disabled = index === 0;
     next.innerHTML = `${index === 8 ? "✓&nbsp; " : ""}${nextLabels[index]} <span>${index === 8 ? "" : "→"}</span>`;
     next.classList.toggle("finish", index === 8);
