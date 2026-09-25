@@ -1,4 +1,4 @@
-(() => {
+(async () => {
   const pages = [...document.querySelectorAll(".page")];
   const tabs = [...document.querySelectorAll(".step-tab")];
   const previous = document.querySelector("#previous");
@@ -7,23 +7,105 @@
   const progress = document.querySelector("#progress-fill");
   const tutorial = document.querySelector("#tutorial");
   const themeToggle = document.querySelector("#theme-toggle");
+  const languageSelect = document.querySelector("#language-select");
   const toast = document.querySelector("#toast");
   const hashes = pages.map((page) => page.id);
-  const nextLabels = [
-    "Start exploring",
-    "Continue",
-    "Continue",
-    "Continue",
-    "Continue",
-    "Continue",
-    "Continue",
-    "Continue",
-    "Finish",
-  ];
+  const supportedLocales = ["en", "es", "fr", "de", "id", "zh-Hans", "pt-BR"];
+  let messages = {};
+  let currentLocale = "en";
   let index = 0;
   let maxVisited = 0;
   let toastTimer;
   let enterTimer;
+
+  function normalizeLocale(locale) {
+    if (!locale) return null;
+    const exact = supportedLocales.find(
+      (supported) => supported.toLowerCase() === locale.toLowerCase(),
+    );
+    if (exact) return exact;
+    const language = locale.toLowerCase().split("-")[0];
+    return (
+      supportedLocales.find(
+        (supported) => supported.toLowerCase().split("-")[0] === language,
+      ) || null
+    );
+  }
+
+  function resolveInitialLocale() {
+    const requested = new URLSearchParams(location.search).get("lang");
+    const saved = localStorage.getItem("hive-tutorial-language");
+    const browser = navigator.languages || [navigator.language];
+    return (
+      normalizeLocale(requested) ||
+      normalizeLocale(saved) ||
+      browser.map(normalizeLocale).find(Boolean) ||
+      "en"
+    );
+  }
+
+  function t(key, fallback = key, values = {}) {
+    const template = messages[key] || fallback;
+    return Object.entries(values).reduce(
+      (text, [name, value]) => text.replaceAll(`{{${name}}}`, value),
+      template,
+    );
+  }
+
+  function applyTranslations() {
+    document.querySelectorAll("[data-i18n]").forEach((element) => {
+      const translation = messages[element.dataset.i18n];
+      if (translation) element.textContent = translation;
+    });
+    document.querySelectorAll("[data-i18n-text]").forEach((element) => {
+      const translation = messages[element.dataset.i18nText];
+      if (!translation) return;
+      const textNode = [...element.childNodes].find(
+        (node) => node.nodeType === Node.TEXT_NODE,
+      );
+      if (textNode) textNode.textContent = translation;
+      else element.append(document.createTextNode(translation));
+    });
+    document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
+      const translation = messages[element.dataset.i18nAriaLabel];
+      if (translation) element.setAttribute("aria-label", translation);
+    });
+    document.querySelectorAll("[data-i18n-content]").forEach((element) => {
+      const translation = messages[element.dataset.i18nContent];
+      if (translation) element.setAttribute("content", translation);
+    });
+  }
+
+  async function setLocale(locale, persist = true) {
+    currentLocale = normalizeLocale(locale) || "en";
+    try {
+      const response = await fetch(
+        `./locales/${currentLocale}.json?v=20260924-i18n2`,
+        { cache: "no-cache" },
+      );
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      messages = await response.json();
+    } catch (error) {
+      console.error(`Could not load locale ${currentLocale}.`, error);
+      currentLocale = "en";
+      const fallback = await fetch("./locales/en.json?v=20260924-i18n2", {
+        cache: "no-cache",
+      });
+      messages = fallback.ok ? await fallback.json() : {};
+    }
+    document.documentElement.lang = currentLocale;
+    languageSelect.value = currentLocale;
+    applyTranslations();
+    if (persist) {
+      localStorage.setItem("hive-tutorial-language", currentLocale);
+      const url = new URL(location.href);
+      if (currentLocale === "en") url.searchParams.delete("lang");
+      else url.searchParams.set("lang", currentLocale);
+      history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+    }
+  }
+
+  await setLocale(resolveInitialLocale(), false);
 
   const brandLogo = document.querySelector(".brand-logo");
   const brandUpload = document.querySelector(".brand-upload");
@@ -74,7 +156,20 @@
     });
     previous.style.display = index === 0 ? "none" : "";
     previous.disabled = index === 0;
-    next.innerHTML = `${index === 8 ? "✓&nbsp; " : ""}${nextLabels[index]} <span>${index === 8 ? "" : "→"}</span>`;
+    const nextLabel =
+      index === 0
+        ? t("nav.start", "Start exploring")
+        : index === pages.length - 1
+          ? t("nav.finish", "Finish")
+          : t("nav.continue", "Continue");
+    const nextIcon = document.createElement("span");
+    nextIcon.textContent = index === pages.length - 1 ? "" : "→";
+    next.replaceChildren(
+      document.createTextNode(
+        `${index === pages.length - 1 ? "✓ " : ""}${nextLabel} `,
+      ),
+      nextIcon,
+    );
     next.classList.toggle("finish", index === 8);
     count.textContent = String(index + 1);
     progress.style.width = `${(index / (pages.length - 1)) * 100}%`;
@@ -87,7 +182,7 @@
   previous.addEventListener("click", () => render(index - 1));
   next.addEventListener("click", () => {
     if (index === pages.length - 1)
-      announce("Tutorial complete — welcome to Hive!");
+      announce(t("toast.complete", "Tutorial complete — welcome to Hive!"));
     else render(index + 1);
   });
   tabs.forEach((tab) =>
@@ -105,8 +200,8 @@
     themeToggle.setAttribute(
       "aria-label",
       document.documentElement.classList.contains("light")
-        ? "Switch to dark mode"
-        : "Switch to light mode",
+        ? t("theme.dark", "Switch to dark mode")
+        : t("theme.light", "Switch to light mode"),
     );
   }
   syncThemeLabel();
@@ -134,29 +229,65 @@
   let keychainAvailable = false;
   let requestTimer;
 
+  function setDemoLabel(message) {
+    demoLabel.replaceChildren(
+      document.createElement("i"),
+      document.createTextNode(message),
+    );
+  }
+
+  function syncKeychainModeCopy(available) {
+    loginButton.querySelector("span").textContent = t(
+      "login.button",
+      "Login with Keychain",
+    );
+    if (available) {
+      loginNotice.hidden = true;
+      loginNotice.style.display = "none";
+      setDemoLabel(
+        t(
+          "login.liveDemo",
+          "Live Keychain request · no transaction is broadcast",
+        ),
+      );
+      return;
+    }
+
+    loginNotice.hidden = false;
+    loginNotice.style.display = "flex";
+    const arrow = document.createElement("span");
+    arrow.textContent = "⇩";
+    const notice = document.createElement("p");
+    notice.append(
+      document.createTextNode(
+        `${t("login.installPrompt", "Install Hive Keychain first to try the real login request.")} `,
+      ),
+    );
+    const download = document.createElement("a");
+    download.href = "https://hive-keychain.com/#download";
+    download.target = "_blank";
+    download.rel = "noreferrer";
+    download.textContent = t("login.download", "Download Hive Keychain");
+    notice.append(download, ".");
+    loginNotice.replaceChildren(arrow, notice);
+    setDemoLabel(
+      t("login.tutorialDemo", "Tutorial demonstration · not a real request"),
+    );
+  }
+
   function setKeychainMode(available) {
     keychainAvailable = available;
     loginButton.classList.remove("is-success");
     loginButton.disabled = false;
-    loginButton.querySelector("span").textContent = "Login with Keychain";
-    if (available) {
-      loginNotice.hidden = true;
-      loginNotice.style.display = "none";
-      demoLabel.innerHTML =
-        "<i></i>Live Keychain request · no transaction is broadcast";
-    } else {
-      loginNotice.hidden = false;
-      loginNotice.style.display = "flex";
-      loginNotice.innerHTML =
-        '<span>⇩</span><p>Install Hive Keychain first to try the real login request. <a href="https://hive-keychain.com/#download" target="_blank" rel="noreferrer">Download Hive Keychain</a>.</p>';
-      demoLabel.innerHTML =
-        "<i></i>Tutorial demonstration · not a real request";
-    }
+    syncKeychainModeCopy(available);
   }
 
   function detectKeychain() {
     loginButton.disabled = true;
-    loginButton.querySelector("span").textContent = "Checking for Keychain…";
+    loginButton.querySelector("span").textContent = t(
+      "login.checking",
+      "Checking for Keychain…",
+    );
     const injectionDeadline = Date.now() + 1500;
 
     function attemptHandshake() {
@@ -191,7 +322,10 @@
     approvalPanel.setAttribute("aria-hidden", "true");
     loginProgress.textContent = "";
     loginButton.disabled = false;
-    loginButton.querySelector("span").textContent = "Login with Keychain";
+    loginButton.querySelector("span").textContent = t(
+      "login.button",
+      "Login with Keychain",
+    );
   }
 
   function requestKeychainLogin() {
@@ -208,9 +342,14 @@
 
     loginButton.classList.remove("is-success");
     loginButton.disabled = true;
-    loginButton.querySelector("span").textContent = "Waiting for Keychain…";
-    loginProgress.textContent =
-      "Review the real login request in Hive Keychain.";
+    loginButton.querySelector("span").textContent = t(
+      "login.waiting",
+      "Waiting for Keychain…",
+    );
+    loginProgress.textContent = t(
+      "login.reviewRequest",
+      "Review the real login request in Hive Keychain.",
+    );
     try {
       window.hive_keychain.requestSignBuffer(
         null,
@@ -221,27 +360,47 @@
             const username =
               (response.data && response.data.username) || response.username;
             loginButton.classList.add("is-success");
-            loginButton.querySelector("span").textContent = "Logged in";
-            loginProgress.textContent = `${username ? `Authenticated as @${username}. ` : "Authentication approved. "}Your private key stayed in Keychain.`;
-            announce("Real Keychain login approved.");
+            loginButton.querySelector("span").textContent = t(
+              "login.loggedIn",
+              "Logged in",
+            );
+            loginProgress.textContent = username
+              ? t(
+                  "login.authenticatedAs",
+                  "Authenticated as @{{username}}. Your private key stayed in Keychain.",
+                  { username },
+                )
+              : t(
+                  "login.authenticationApproved",
+                  "Authentication approved. Your private key stayed in Keychain.",
+                );
+            announce(t("login.realApproved", "Real Keychain login approved."));
             return;
           }
 
           loginButton.disabled = false;
-          loginButton.querySelector("span").textContent = "Login with Keychain";
+          loginButton.querySelector("span").textContent = t(
+            "login.button",
+            "Login with Keychain",
+          );
           loginProgress.textContent =
             response && response.message
               ? response.message
-              : "The Keychain request was cancelled.";
-          announce("Keychain login was not approved.");
+              : t(
+                  "login.requestCancelled",
+                  "The Keychain request was cancelled.",
+                );
+          announce(t("login.notApproved", "Keychain login was not approved."));
         },
         null,
         "Hive Keychain tutorial login",
       );
     } catch (error) {
       setKeychainMode(false);
-      loginProgress.textContent =
-        "Keychain could not open the request. The tutorial has switched to simulation mode.";
+      loginProgress.textContent = t(
+        "login.openFailed",
+        "Keychain could not open the request. The tutorial has switched to simulation mode.",
+      );
     }
   }
 
@@ -251,8 +410,14 @@
       return;
     }
     loginButton.disabled = true;
-    loginButton.querySelector("span").textContent = "Sending request…";
-    loginProgress.textContent = "Sending request to Keychain…";
+    loginButton.querySelector("span").textContent = t(
+      "login.sending",
+      "Sending request…",
+    );
+    loginProgress.textContent = t(
+      "login.sendingToKeychain",
+      "Sending request to Keychain…",
+    );
     requestTimer = setTimeout(() => {
       approvalPanel.classList.add("open");
       approvalPanel.setAttribute("aria-hidden", "false");
@@ -261,22 +426,39 @@
   });
   document.querySelector("#login-cancel").addEventListener("click", () => {
     closeApproval();
-    announce("Login cancelled. No request was approved.");
+    announce(t("login.cancelled", "Login cancelled. No request was approved."));
   });
   document.querySelector("#login-approve").addEventListener("click", () => {
     closeApproval();
     loginButton.classList.add("is-success");
-    loginButton.querySelector("span").textContent = "Logged in";
+    loginButton.querySelector("span").textContent = t(
+      "login.loggedIn",
+      "Logged in",
+    );
     loginButton.disabled = true;
-    loginProgress.textContent =
-      "Authentication approved — your private key stayed on your device.";
-    announce("Login approved in this tutorial simulation.");
+    loginProgress.textContent = t(
+      "login.simulatedApprovedDetail",
+      "Authentication approved — your private key stayed on your device.",
+    );
+    announce(
+      t(
+        "login.simulatedApproved",
+        "Login approved in this tutorial simulation.",
+      ),
+    );
   });
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && approvalPanel.classList.contains("open"))
       closeApproval();
   });
   detectKeychain();
+
+  languageSelect.addEventListener("change", async () => {
+    await setLocale(languageSelect.value);
+    syncThemeLabel();
+    syncKeychainModeCopy(keychainAvailable);
+    render(index, false);
+  });
 
   const initial = Math.max(0, hashes.indexOf(location.hash.slice(1)));
   maxVisited = initial;
