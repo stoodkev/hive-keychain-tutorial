@@ -976,6 +976,63 @@ main:before {
   min-height: 22px;
   margin: 16px 0 0 !important;
 }
+.login-profile[hidden] {
+  display: none;
+}
+.login-profile {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+  margin-top: 14px;
+  text-align: left;
+}
+.login-avatar {
+  display: grid;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  overflow: hidden;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--soft);
+}
+.login-avatar img,
+.login-avatar-fallback {
+  width: 100%;
+  height: 100%;
+  grid-area: 1 / 1;
+}
+.login-avatar img {
+  display: block;
+  object-fit: cover;
+}
+.login-avatar-fallback {
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 800;
+}
+.login-avatar-fallback[hidden] {
+  display: none;
+}
+.login-profile-copy {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+.login-profile-copy small {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+.login-profile-copy strong {
+  overflow: hidden;
+  max-width: min(260px, 65vw);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .approval-panel {
   position: absolute;
   z-index: 3;

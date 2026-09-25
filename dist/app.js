@@ -80,7 +80,7 @@
     currentLocale = normalizeLocale(locale) || "en";
     try {
       const response = await fetch(
-        `./locales/${currentLocale}.json?v=20260924-i18n2`,
+        `./locales/${currentLocale}.json?v=20260924-i18n4`,
         { cache: "no-cache" },
       );
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -88,7 +88,7 @@
     } catch (error) {
       console.error(`Could not load locale ${currentLocale}.`, error);
       currentLocale = "en";
-      const fallback = await fetch("./locales/en.json?v=20260924-i18n2", {
+      const fallback = await fetch("./locales/en.json?v=20260924-i18n4", {
         cache: "no-cache",
       });
       messages = fallback.ok ? await fallback.json() : {};
@@ -182,7 +182,7 @@
   previous.addEventListener("click", () => render(index - 1));
   next.addEventListener("click", () => {
     if (index === pages.length - 1)
-      announce(t("toast.complete", "Tutorial complete — welcome to Hive!"));
+      announce(t("toast.complete", "Tutorial complete. Welcome to Hive!"));
     else render(index + 1);
   });
   tabs.forEach((tab) =>
@@ -226,8 +226,46 @@
   const approvalPanel = document.querySelector("#approval-panel");
   const loginNotice = document.querySelector("#login-notice");
   const demoLabel = document.querySelector(".demo-label");
+  const loginProfile = document.querySelector("#login-profile");
+  const loginAvatarImage = document.querySelector("#login-avatar-image");
+  const loginAvatarFallback = document.querySelector("#login-avatar-fallback");
+  const loginProfileUsername = document.querySelector(
+    "#login-profile-username",
+  );
   let keychainAvailable = false;
   let requestTimer;
+
+  function hideLoginProfile() {
+    loginProfile.hidden = true;
+    loginAvatarImage.onerror = null;
+    loginAvatarImage.removeAttribute("src");
+    loginAvatarImage.hidden = false;
+    loginAvatarFallback.hidden = true;
+    loginAvatarFallback.textContent = "";
+    loginProfileUsername.textContent = "";
+  }
+
+  function showLoginProfile(username) {
+    const cleanUsername = String(username || "")
+      .trim()
+      .replace(/^@/, "");
+    if (!cleanUsername) {
+      hideLoginProfile();
+      return "";
+    }
+
+    loginProfileUsername.textContent = `@${cleanUsername}`;
+    loginAvatarFallback.textContent = cleanUsername.charAt(0).toUpperCase();
+    loginAvatarFallback.hidden = true;
+    loginAvatarImage.hidden = false;
+    loginAvatarImage.onerror = () => {
+      loginAvatarImage.hidden = true;
+      loginAvatarFallback.hidden = false;
+    };
+    loginAvatarImage.src = `https://images.hive.blog/u/${encodeURIComponent(cleanUsername)}/avatar`;
+    loginProfile.hidden = false;
+    return cleanUsername;
+  }
 
   function setDemoLabel(message) {
     demoLabel.replaceChildren(
@@ -277,6 +315,7 @@
 
   function setKeychainMode(available) {
     keychainAvailable = available;
+    hideLoginProfile();
     loginButton.classList.remove("is-success");
     loginButton.disabled = false;
     syncKeychainModeCopy(available);
@@ -340,6 +379,7 @@
       `Nonce: ${nonce}`,
     ].join("\n");
 
+    hideLoginProfile();
     loginButton.classList.remove("is-success");
     loginButton.disabled = true;
     loginButton.querySelector("span").textContent = t(
@@ -359,16 +399,17 @@
           if (response && response.success) {
             const username =
               (response.data && response.data.username) || response.username;
+            const cleanUsername = showLoginProfile(username);
             loginButton.classList.add("is-success");
             loginButton.querySelector("span").textContent = t(
               "login.loggedIn",
               "Logged in",
             );
-            loginProgress.textContent = username
+            loginProgress.textContent = cleanUsername
               ? t(
                   "login.authenticatedAs",
                   "Authenticated as @{{username}}. Your private key stayed in Keychain.",
-                  { username },
+                  { username: cleanUsername },
                 )
               : t(
                   "login.authenticationApproved",
@@ -409,6 +450,7 @@
       requestKeychainLogin();
       return;
     }
+    hideLoginProfile();
     loginButton.disabled = true;
     loginButton.querySelector("span").textContent = t(
       "login.sending",
@@ -438,7 +480,7 @@
     loginButton.disabled = true;
     loginProgress.textContent = t(
       "login.simulatedApprovedDetail",
-      "Authentication approved — your private key stayed on your device.",
+      "Authentication approved. Your private key stayed on your device.",
     );
     announce(
       t(
