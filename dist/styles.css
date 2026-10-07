@@ -859,23 +859,13 @@ main:before {
   font-size: 0.8rem;
 }
 .key-visual {
-  position: relative;
   display: grid;
-  gap: 14px;
-  padding-left: 25px;
-}
-.key-visual:before {
-  content: "";
-  position: absolute;
-  top: 18px;
-  bottom: 18px;
-  left: 7px;
-  border-left: 2px dashed color-mix(in srgb, var(--accent) 28%, var(--border));
+  gap: 10px;
 }
 .key-visual span,
 .key-visual b {
   position: relative;
-  padding: 11px;
+  padding: 11px 11px 11px 36px;
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--surface2);
@@ -887,13 +877,11 @@ main:before {
   content: "";
   position: absolute;
   top: 50%;
-  left: -23px;
-  width: 9px;
-  height: 9px;
-  border: 2px solid var(--surface);
+  left: 14px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: color-mix(in srgb, var(--accent) 28%, var(--border));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 20%, var(--border));
   transform: translateY(-50%);
 }
 .key-visual b {
@@ -903,7 +891,6 @@ main:before {
 }
 .key-visual b:before {
   background: var(--accent);
-  box-shadow: 0 0 0 3px var(--soft);
 }
 .login-notice {
   display: flex;
