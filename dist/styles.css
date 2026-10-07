@@ -801,21 +801,10 @@ main:before {
   content: "";
   position: absolute;
   top: 17px;
-  bottom: 13px;
+  bottom: 17px;
   left: 7px;
   width: 2px;
   background: color-mix(in srgb, var(--accent) 38%, var(--border));
-}
-.mini-flow:after {
-  content: "";
-  position: absolute;
-  bottom: 10px;
-  left: 4px;
-  width: 6px;
-  height: 6px;
-  border-right: 2px solid color-mix(in srgb, var(--accent) 38%, var(--border));
-  border-bottom: 2px solid color-mix(in srgb, var(--accent) 38%, var(--border));
-  transform: rotate(45deg);
 }
 .mini-flow span {
   position: relative;
