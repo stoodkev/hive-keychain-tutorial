@@ -473,36 +473,143 @@ main:before {
   color: var(--muted);
   font-size: 0.88rem;
 }
+#hive .page-head {
+  margin-bottom: 26px;
+}
 .ecosystem-map {
+  --map-gap: 12px;
+  width: min(840px, 100%);
+  margin: 0 auto 28px;
+}
+.map-node {
+  min-width: 0;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 28px;
+  gap: 12px;
+  text-align: center;
+  font-size: 0.88rem;
 }
-.ecosystem-map > span {
-  padding: 8px 13px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--surface);
-  color: var(--muted);
-  font-size: 0.78rem;
+.map-node img,
+.map-node > svg {
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
 }
-.ecosystem-map .map-core {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  border-color: rgba(246, 46, 82, 0.35);
-  color: var(--text);
-  font-weight: 700;
-}
-.map-core svg {
-  width: 17px;
-  height: 17px;
+.map-node svg {
   fill: none;
   stroke: var(--accent);
-  stroke-width: 1.8;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.map-core,
+.map-keychain,
+.map-hive {
+  width: min(240px, 100%);
+  margin-inline: auto;
+}
+.map-core,
+.map-hive {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+}
+.map-keychain {
+  border-color: var(--accent);
+  background: var(--soft);
+}
+.map-link,
+.map-branches,
+.map-merge {
+  position: relative;
+  color: var(--accent);
+}
+.map-link {
+  height: 24px;
+  background: linear-gradient(currentColor, currentColor) center / 2px 100% no-repeat;
+}
+.map-link:after,
+.map-branches > span:after,
+.map-merge:after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: calc(50% - 4px);
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+.map-branches,
+.map-merge {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--map-gap);
+  height: 36px;
+}
+.map-branches:before,
+.map-merge:before {
+  content: "";
+  position: absolute;
+  left: calc(12.5% - var(--map-gap) * 0.375);
+  right: calc(12.5% - var(--map-gap) * 0.375);
+  border-top: 2px solid currentColor;
+}
+.map-branches:before {
+  top: 14px;
+}
+.map-branches:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(50% - 1px);
+  height: 14px;
+  border-left: 2px solid currentColor;
+}
+.map-branches > span,
+.map-merge > span {
+  position: relative;
+}
+.map-branches > span:before,
+.map-merge > span:before {
+  content: "";
+  position: absolute;
+  left: calc(50% - 1px);
+  border-left: 2px solid currentColor;
+}
+.map-branches > span:before {
+  top: 14px;
+  bottom: 3px;
+}
+.map-merge {
+  background: linear-gradient(currentColor, currentColor) center bottom / 2px 18px no-repeat;
+}
+.map-merge:before {
+  top: 18px;
+}
+.map-merge > span:before {
+  top: 0;
+  height: 18px;
+}
+.map-dapps ul {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--map-gap);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.map-dapps .map-node {
+  flex-direction: column;
+  min-height: 88px;
+  padding: 12px 6px;
+  font-size: 0.78rem;
+  overflow-wrap: anywhere;
 }
 .key-grid {
   display: grid;
@@ -851,6 +958,9 @@ main:before {
 .mini-flow i {
   display: none;
 }
+.sign-card .mini-flow {
+  padding-bottom: 18px;
+}
 .interface-card > p {
   margin: auto 0 0;
   padding-top: 17px;
@@ -982,6 +1092,18 @@ main:before {
 .demo-brand .brand-mark {
   width: 36px;
   height: 36px;
+}
+.demo-keychain-logo {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+.login-keychain-logo {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
+  object-fit: contain;
 }
 .demo-brand strong {
   font-size: 1.25rem;
@@ -1451,7 +1573,11 @@ main:before {
     grid-template-columns: 1fr;
   }
   .ecosystem-map {
-    padding-bottom: 10px;
+    --map-gap: 8px;
+  }
+  .map-dapps .map-node {
+    padding-inline: 4px;
+    font-size: 0.75rem;
   }
   .key-card {
     text-align: center;

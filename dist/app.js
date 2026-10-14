@@ -80,7 +80,7 @@
     currentLocale = normalizeLocale(locale) || "en";
     try {
       const response = await fetch(
-        `./locales/${currentLocale}.json?v=20260924-i18n4`,
+        `./locales/${currentLocale}.json?v=20261014-tutorial`,
         { cache: "no-cache" },
       );
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -88,7 +88,7 @@
     } catch (error) {
       console.error(`Could not load locale ${currentLocale}.`, error);
       currentLocale = "en";
-      const fallback = await fetch("./locales/en.json?v=20260924-i18n4", {
+      const fallback = await fetch("./locales/en.json?v=20261014-tutorial", {
         cache: "no-cache",
       });
       messages = fallback.ok ? await fallback.json() : {};
@@ -302,7 +302,8 @@
       ),
     );
     const download = document.createElement("a");
-    download.href = "https://hive-keychain.com/#download";
+    download.href =
+      "https://hive-keychain.com/#:~:text=Start%20with%20Keychain%20now!";
     download.target = "_blank";
     download.rel = "noreferrer";
     download.textContent = t("login.download", "Download Hive Keychain");
@@ -374,8 +375,6 @@
         : `${Date.now()}-${Math.random()}`;
     const challenge = [
       "Hive Keychain tutorial login",
-      `Domain: ${location.host || "local tutorial"}`,
-      `Issued: ${new Date().toISOString()}`,
       `Nonce: ${nonce}`,
     ].join("\n");
 
@@ -408,12 +407,12 @@
             loginProgress.textContent = cleanUsername
               ? t(
                   "login.authenticatedAs",
-                  "Authenticated as @{{username}}. Your private key stayed in Keychain.",
+                  "Authenticated as @{{username}}. Your private keys stayed in Keychain.",
                   { username: cleanUsername },
                 )
               : t(
                   "login.authenticationApproved",
-                  "Authentication approved. Your private key stayed in Keychain.",
+                  "Authentication approved. Your private keys stayed in Keychain.",
                 );
             announce(t("login.realApproved", "Real Keychain login approved."));
             return;
@@ -480,7 +479,7 @@
     loginButton.disabled = true;
     loginProgress.textContent = t(
       "login.simulatedApprovedDetail",
-      "Authentication approved. Your private key stayed on your device.",
+      "Authentication approved. Your private keys stayed on your device.",
     );
     announce(
       t(
