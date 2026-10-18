@@ -509,13 +509,11 @@ main:before {
   stroke-linejoin: round;
 }
 .map-core,
-.map-keychain,
-.map-hive {
+.map-keychain {
   width: min(240px, 100%);
   margin-inline: auto;
 }
-.map-core,
-.map-hive {
+.map-core {
   border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
 }
 .map-keychain {
@@ -523,8 +521,7 @@ main:before {
   background: var(--soft);
 }
 .map-link,
-.map-branches,
-.map-merge {
+.map-branches {
   position: relative;
   color: var(--accent);
 }
@@ -533,8 +530,7 @@ main:before {
   background: linear-gradient(currentColor, currentColor) center / 2px 100% no-repeat;
 }
 .map-link:after,
-.map-branches > span:after,
-.map-merge:after {
+.map-branches > span:after {
   content: "";
   position: absolute;
   bottom: 2px;
@@ -545,15 +541,13 @@ main:before {
   border-bottom: 2px solid currentColor;
   transform: rotate(45deg);
 }
-.map-branches,
-.map-merge {
+.map-branches {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--map-gap);
   height: 36px;
 }
-.map-branches:before,
-.map-merge:before {
+.map-branches:before {
   content: "";
   position: absolute;
   left: calc(12.5% - var(--map-gap) * 0.375);
@@ -571,12 +565,10 @@ main:before {
   height: 14px;
   border-left: 2px solid currentColor;
 }
-.map-branches > span,
-.map-merge > span {
+.map-branches > span {
   position: relative;
 }
-.map-branches > span:before,
-.map-merge > span:before {
+.map-branches > span:before {
   content: "";
   position: absolute;
   left: calc(50% - 1px);
@@ -585,16 +577,6 @@ main:before {
 .map-branches > span:before {
   top: 14px;
   bottom: 3px;
-}
-.map-merge {
-  background: linear-gradient(currentColor, currentColor) center bottom / 2px 18px no-repeat;
-}
-.map-merge:before {
-  top: 18px;
-}
-.map-merge > span:before {
-  top: 0;
-  height: 18px;
 }
 .map-dapps ul {
   display: grid;

@@ -38,7 +38,7 @@
   "hive.controlDescription": "Your keys, your account. You decide what gets signed and what doesn't.",
   "hive.account": "Hive Account",
   "hive.dappsOnHive": "dApps on Hive",
-  "hive.diagramDescription": "One Hive account connects through Keychain to social, gaming, community, and other dApps on Hive.",
+  "hive.diagramDescription": "One Hive account connects using its keys to social, gaming, community, and other dApps on Hive.",
   "hive.social": "Social",
   "hive.games": "Games",
   "hive.communities": "Communities",

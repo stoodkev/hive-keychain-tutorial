@@ -38,7 +38,7 @@
   "hive.controlDescription": "你的密钥，你的账户。你决定哪些操作被签名，哪些不被签名。",
   "hive.account": "Hive 账户",
   "hive.dappsOnHive": "Hive 上的 dApps",
-  "hive.diagramDescription": "一个 Hive 账户通过 Keychain 连接到 Hive 上的社交、游戏、社区及其他 dApps。",
+  "hive.diagramDescription": "一个 Hive 账户使用其密钥连接到 Hive 上的社交、游戏、社区及其他 dApps。",
   "hive.social": "社交",
   "hive.games": "游戏",
   "hive.communities": "社区",

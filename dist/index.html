@@ -194,7 +194,7 @@
             control.</p>
         </div>
         <figure class="ecosystem-map">
-          <figcaption class="sr-only" data-i18n="hive.diagramDescription">One Hive account connects through Keychain to
+          <figcaption class="sr-only" data-i18n="hive.diagramDescription">One Hive account connects using its keys to
             social, gaming, community, and other dApps on Hive.</figcaption>
           <div class="map-node map-core">
             <svg aria-hidden="true">
@@ -204,8 +204,10 @@
           </div>
           <div class="map-link" aria-hidden="true"></div>
           <div class="map-node map-keychain">
-            <img src="./assets/images/logo-square.png" alt="" />
-            <strong>Keychain</strong>
+            <svg aria-hidden="true">
+              <use href="#i-key" />
+            </svg>
+            <strong data-i18n="keychain.keysTitle">Keys</strong>
           </div>
           <div class="map-branches" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
           <div class="map-dapps">
@@ -224,11 +226,6 @@
                   <use href="#i-window" />
                 </svg><strong data-i18n="explore.otherApps">Other dApps</strong></li>
             </ul>
-          </div>
-          <div class="map-merge" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-          <div class="map-node map-hive">
-            <img src="./assets/images/hive.png" alt="" />
-            <strong>Hive</strong>
           </div>
         </figure>
         <div class="three-cards">

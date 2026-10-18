@@ -38,7 +38,7 @@
   "hive.controlDescription": "Tus claves, tu cuenta. Tú decides qué se firma y qué no.",
   "hive.account": "Cuenta Hive",
   "hive.dappsOnHive": "dApps en Hive",
-  "hive.diagramDescription": "Una cuenta de Hive se conecta a través de Keychain con dApps sociales, de juegos, de comunidades y otras dApps en Hive.",
+  "hive.diagramDescription": "Una cuenta de Hive se conecta usando sus claves con dApps sociales, de juegos, de comunidades y otras dApps en Hive.",
   "hive.social": "Social",
   "hive.games": "Juegos",
   "hive.communities": "Comunidades",
